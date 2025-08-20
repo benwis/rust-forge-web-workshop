@@ -17,7 +17,6 @@ We'll be using stable Rust in this workshop, but we do support Nightly, which of
 rustup target add wasm32-unknown-unknown
 rustup component add rust-analyzer #optional, I like to manage RA through rustup
 ```
-	- 
 ### 2. Cargo Extensions
 ```bash
 cargo install cargo-leptos --locked # compiles leptos SSR projects and provides some DX features
