@@ -39,7 +39,18 @@ counter on it. Clicking it should cause it to increment. If this doesn't happen,
 
 ## Let's tweak it.
 We're going to start this off simple, let's add a new page to the starter app.
-Leptos has a router built in that's perfect for these cases. 
+Leptos has a router built in that's perfect for these cases. We can find the `Router` component that handles routes in your app crate in the `lib.rs` file.
+```html
+        <Router>
+            <main>
+                <Routes fallback=|| "Page not found.".into_view()>
+                    <Route path=StaticSegment("") view=HomePage/>
+                </Routes>
+            </main>
+        </Router>
+
+```
+
 ## Exercise
 Add an About page to our site. It's fine if it's blank, we'll cover that in the
 next one. Let's just get it to not return 404 on navigation
