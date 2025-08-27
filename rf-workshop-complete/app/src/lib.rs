@@ -4,7 +4,7 @@ use leptos_router::{
     components::{Route, Router, Routes},
     StaticSegment,
 };
-use crate::pages::About;
+use crate::pages::Archive;
 pub mod pages;
 
 pub fn shell(options: LeptosOptions) -> impl IntoView {
@@ -41,8 +41,8 @@ pub fn App() -> impl IntoView {
             <main>
                 <Routes fallback=|| "Page not found.".into_view()>
                     <Route path=StaticSegment("") view=HomePage/>
-                    //<Route path=path!("/about") view=About /> This also works and can be simpler for complex routes
-                    <Route path=StaticSegment("/about") view=About/>
+                    //<Route path=path!("/archive") view=Archive /> This also works and can be simpler for complex routes
+                    <Route path=StaticSegment("/archive") view=Archive/>
                 </Routes>
             </main>
         </Router>
