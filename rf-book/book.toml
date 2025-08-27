@@ -1,0 +1,5 @@
+[book]
+authors = ["benwis"]
+language = "en"
+src = "src"
+title = "Rust Forge - Build a Blog with Leptos!"

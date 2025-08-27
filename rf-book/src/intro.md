@@ -1,0 +1,83 @@
+# Intro
+
+TBD: Write some sentences here about why you might want to use this to build a blog.
+- High Performance?
+- You Like Rust
+- You Dislike Javascript
+- Lower Cognitive Overhead
+
+Not here to say that Leptos is the best solution for every blog, or even most blogs. Using a static site generator like zola, hugo, or jekyll, or axum plus your templating language of choice, is often simpler.
+
+Leptos is very much an app framework, meaning it becames useful when you'd like to do something a bit more complicated, especially with client side interactivity. For those of you who are thinking:
+> "Isn't this just a super complicated way to do PHP?"
+
+Bear with me until we get to the fun stuff.
+
+### Install Software
+### 1. Rust
+You'll want to install Rust(if you haven't already) through `rustup`. You can find the link to the instructions [here](https://www.rust-lang.org/tools/install).
+
+Mac Users: Please don't use Homebrew to install rust. It messes with our target switching and causes bugs. If you are using an arm based mac, ou may also want to run `rustcc -Vv` in a terminal to make sure it isn't trying to run rust in "rosetta". 
+
+We'll be using stable Rust in this workshop, but we do support Nightly, which offers a few small ergonomic benefits. I'll leave installation of that to the reader as a do it at your own risk thing, but there isn't a huge difference.
+
+1. Add wasm32-unknown-unknown target
+```bash
+rustup target add wasm32-unknown-unknown
+rustup component add rust-analyzer #optional, I like to manage RA through rustup
+```
+### 2. Cargo Extensions
+```bash
+cargo install cargo-leptos --locked # compiles leptos SSR projects and provides some DX features
+cargo install cargo-generate #optional, but let's you use templates
+```
+
+If you're on Windows, installing `cargo-leptos` from scratch may error out and tell you you need to download `perl`. If you don't want to do that, then I'd recommend installing `cargo-binstall` and installing one of our binary builds
+```bash
+cargo install cargo-binstall
+cargo binstall cargo-leptos
+```
+### 3. IDE Setup
+It's nice to setup our editor with a few DX improvements to make using Leptos easier. [This page](https://book.leptos.dev/getting_started/leptos_dx.html) in our book covers the general process, however for the best experience I recommend either Neovim or Zed. VsCode, RustRover or all work fine, but you may not get as nice syntax highlighting or autocompletions.
+
+- **Code Formatter**: leptosfmt can automatically format code inside of our view! macros, where we combine HTML with Rust code in a very similar way to JSX. This can then be piped into rustfmt to highlight all Rust code. Their [README](https://github.com/bram209/leptosfmt) has setup instructions. I personally use Option 2: Editor specific config, but feel free to install it as you see fit.
+```bash
+cargo install leptosfmt
+```
+* **Enable Features**: Leptos uses different features to gate code that compiles for different targets(server v browser)/(native v wasm), which can cause rust-analyzer to ignore currently non-enabled features. Check the book link [here](https://book.leptos.dev/getting_started/leptos_dx.html#3-enable-features-in-rust-analyzer-for-your-editor-optional)  on how to enable those.
+## Editor Specific Config
+### Neovim
+For neovim/lazyvim/astrovim/etc. we have both a treesitter grammar plugin and a plugin to autoclose brackets provided by rayliwell, which can be found [here](https://github.com/rayliwell/tree-sitter-rstml) and [here](https://github.com/rayliwell/nvim-ts-autotag)
+
+I wrote a blog post on how to setup Lazyvim with these plugins [here](https://benw.is/posts/easy-leptos-editor), the process should be similar for other neovim distros. 
+### Zed
+Zed is a newcomer to this trio, but they now have a plugin that should allow both syntax highlighting, type completion, and autoclosing brackets. You can find that [here](https://zed.dev/extensions/leptos)
+### RustRover
+There isn't too much to modify here, unforunately there's been little to no traction on getting support for the Leptos DSL in RustRover. You can see some of the open issues [here](https://youtrack.jetbrains.com/issue/RUST-17560/Feature-request-leptosfmt-formatter-for-the-leptos-view-macro) and [here](https://youtrack.jetbrains.com/issue/RUST-11857/RustRover-Failing-to-Find-Methods-Autocompletions-in-Leptos-RSX-fileRust-with-HTML-inside-macros). Feel free to comment on those to bring them to their attention
+### VsCode
+VsCode works fairly well, however I know of no movement to add plugins/grammars as there was for Neovim and Zed.
+## Starter Template
+I've chosen to start us off with the [`start-axum-workspace template`](https://github.com/leptos-rs/start-axum-workspace). We can download and setup this template with `cargo-leptos!
+```bash
+cargo leptos new --git https://github.com/leptos-rs/start-axum-workspace/
+```
+I've created this in the same folder as the book, but it can be put anywere.
+We'll be using mdbook for the exercises and workshop. You can install `mdbook` by running
+
+```bash
+cargo install mdbook
+```
+and then open the notes with
+```bash
+mdbook --open rf-book
+```
+run from the root of the git repository.
+
+
+> Q: Why use the workspace version instead of the more traditional [`start-axum`](https://github.com/leptos-rs/start-axum) template?
+>
+> A: The workspace version separates concerns a bit more clearly than the traditional template, which relies more on feature gating. Both are good choices, but as your app grows larger, separating bits of UI and features into other crates will help with compile time!
+
+# Folder Structure
+- `completed-exercises/` contains completed versions of the app up to the started example as subfolders. It's a good resource if you get stuck, but try not to look at that first. Spending time reading the docs and asking questions will help the material stick more
+- `rf-book` - files for the mdbook, you should be able to ignore those unless you'd like to PR changes
